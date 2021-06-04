@@ -1,20 +1,81 @@
-menu = [('漢堡',60) ,('炸雞',50) ,('薯條',40),('沙拉',30),('玉米濃湯',20),('可樂',10)]
+#訂餐系統
+key = True
+Userlist = []
+foodlist = []
+moneylist = []
+allFood = ''
+allUser = ''
+allPeople = ''
+allmoney = 0
 
-#moneys = menu[1, 2, 3, 4, 5, 6]
+def welcome():
+    OrderStart = input('歡迎光臨麥當勞\n請問要內用還是外帶呢?   : ')
+    while (OrderStart == '內用' or OrderStart == '外帶'):
+        break
+    if (OrderStart != '內用' or OrderStart != '外帶'):
+            OrderStart = input ('請輸入內用或是外帶喔 !!   :')
+        
 
-print(foods(1))
-'''
-def set():
-    food  = input('\n\n1號餐為 炸雞 + 薯條 + 可樂\n2號餐為 漢堡 + 薯條 + 可樂\n3號餐為 漢堡 + 沙拉 + 玉米濃湯\n請輸入餐點編號 : ')
-    if (food == '1'):
-        print(menu[1] + menu[2] + menu[5])
 
+def addUser():
+    #增加訂餐者
+    User = input('    請輸入姓名 : ')
+    Userlist.append(User)#把人名加入List
+    addFood()
 
-def food():
-    pass
+def addFood():
+    #增加訂餐者的餐點
+    food = input('    要吃甚麼 : ')
+    foodlist.append(food)#把食物加入List
+    addMoney()
 
-Meals = input('套餐請按-1- 單點請按 -2- \n請輸入套餐或單點 : ')
-if (Meals == '1'):
-    set()
-elif (Meals == '2'):
-    Singo()'''
+def addMoney():
+    #增加價格
+    money = int(input('    價格 : '))
+    moneylist.append(money)
+
+def setfood():
+    #增加食物
+    global allFood
+    for v in range(len(foodlist)):
+        allFood = allFood + ' ' + foodlist[v] 
+    return '食物總結:' + allFood
+
+def setUser():
+    #所有人名
+    global allUser
+    for v in range(len(Userlist)):
+        allUser = allUser + ' ' + Userlist[v]
+    return '人名總結:' + allUser
+
+def setMoney():
+    #價錢加總
+    global allmoney
+    for v in range(len(moneylist)):
+        allmoney += moneylist[v]
+    return '金額總結:' + str(allmoney)
+
+def printAll():
+    #最後輸出
+    global allPeople
+    for v in range(len(moneylist)):
+        allPeople = allPeople + Userlist[v] + '吃' + foodlist[v] + str(moneylist[v]) + "元  (" + OrderStart + ")\n"
+    return allPeople
+    
+
+#--------------------------------------------------------------------------------------------
+while(key == True):
+    welcome()
+    print('----------------------------------------------------')
+    ifAddUser = input('若要新增請按 Y : ')
+
+    if(ifAddUser == 'Y' or ifAddUser == 'y'):
+        addUser()
+    else:
+        print('****************************************************')
+        print(setfood())
+        print(setUser())
+        print('****************************************************')
+        print(printAll())
+        print(setMoney())
+        key = False
